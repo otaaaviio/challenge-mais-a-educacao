@@ -29,6 +29,15 @@ To execute this project, you have 2 options:
 
 ps: docker is much easier :p
 
+1. Clone the repository
+```
+git clone https://github.com/otaaaviio/challenge-mais-a-educacao.git
+```
+2. Enter on backend folder
+```
+cd challenge-mais-a-educacao/backend
+```
+
 ### Local
 
 First, you need to have on your machine:
@@ -36,14 +45,6 @@ First, you need to have on your machine:
 - npm
 - postgresql running
 - redis running
-- Clone the repository
-```
-git clone https://github.com/otaaaviio/challenge-mais-a-educacao.git
-```
-- Enter on backend folder
-```
-cd challenge-mais-a-educacao/backend
-```
 
 After that, you can follow the steps:
 
@@ -53,13 +54,13 @@ After that, you can follow the steps:
 npm install
 ```
 
-4. Copy the .env.example file to .env
+4. Copy the `.env.example` file to `.env`
 
 ```bash
 cp .env.example .env
 ```
 
-ps: You need to change the .env to your local configuration
+ps: You need to change the `.env` to your local configuration
 
 5. Run the migrations and fix the constraints
 
@@ -76,8 +77,10 @@ npm run start
 
 7. Access in your browser the address:
 
+Default port is 4000
+
 ```
-http://localhost:3000
+http://localhost:[PORT]
 ```
 
 ### Docker
@@ -91,7 +94,7 @@ http://localhost:3000
 4. Access in your browser the address:
 
 ```
-http://0.0.0.0:80
+http://0.0.0.0:4000
 ```
 
 For the next times, you can use this for start and stop the containers:
