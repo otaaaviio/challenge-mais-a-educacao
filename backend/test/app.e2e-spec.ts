@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
-import { INestApplication } from '@nestjs/common';
+import { HttpStatus, INestApplication } from '@nestjs/common';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -22,7 +22,19 @@ describe('AppController (e2e)', () => {
   it('/ (GET)', () => {
     return request(app.getHttpServer())
       .get('/hello')
-      .expect(200)
+      .expect(HttpStatus.OK)
       .expect('Hello World!');
+  });
+
+  it('should fail this test', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/non-existent-endpoint')
+      .expect(HttpStatus.NOT_FOUND);
+
+    expect(response.body).toEqual({
+      error: "Not Found",
+      message: "Cannot GET /non-existent-endpoint",
+      statusCode: HttpStatus.NOT_FOUND,
+    });
   });
 });

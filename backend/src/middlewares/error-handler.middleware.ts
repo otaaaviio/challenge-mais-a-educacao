@@ -8,7 +8,6 @@ import { Response } from 'express';
 import { ZodError } from 'zod';
 import { zodErrorParser } from '../utils/zod-parser';
 import { Prisma } from '@prisma/client';
-import { StudentNotFoundException } from '../exceptions/student-not-found.exception';
 
 @Catch()
 export class ErrorHandlerMiddleware implements ExceptionFilter {
