@@ -44,8 +44,8 @@ export class StudentController {
   ) {
     const params = validateQueryParams({ page, limit, raFilter });
     try {
-      const students = await this.studentService.findAllStudents(params);
-      return res.status(HttpStatus.OK).send({ data: students });
+      const data = await this.studentService.findAllStudents(params);
+      return res.status(HttpStatus.OK).send(data);
     } catch (err) {
       this.logger.error(`Failed to find all students:\n ${err}`);
       throw err;

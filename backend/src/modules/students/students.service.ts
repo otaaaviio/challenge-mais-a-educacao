@@ -47,9 +47,17 @@ export class StudentService {
       skip: (params.page - 1) * params.limit,
     });
 
-    await this.redis.set('students', JSON.stringify(students));
+    const totalStudents = await this.prisma.student.count({ where: whereClause });
 
-    return students;
+    await this.redis.set(redisKey, JSON.stringify(students));
+
+    return {
+      data: students,
+      currentPage: params.page,
+      itemsPerPage: params.limit,
+      totalData: totalStudents,
+      totalPages: Math.ceil(totalStudents / params.limit),
+    };
   }
 
   async findStudent(id: number) {
