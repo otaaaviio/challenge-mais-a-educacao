@@ -48,6 +48,10 @@ describe('StudentController (e2e)', () => {
 
     expect(response.body).toEqual({
       data: expect.any(Array),
+      currentPage: 1,
+      itemsPerPage: 10,
+      totalData: expect.any(Number),
+      totalPages: expect.any(Number),
     });
   });
 
@@ -66,7 +70,6 @@ describe('StudentController (e2e)', () => {
     await request(app.getHttpServer())
       .get(`/student/99999999`)
       .expect(HttpStatus.NOT_FOUND);
-
   });
 
   it('/student/:id (PUT)', async () => {

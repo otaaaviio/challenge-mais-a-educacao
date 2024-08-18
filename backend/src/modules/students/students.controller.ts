@@ -7,10 +7,15 @@ import {
   Delete,
   HttpStatus,
   Res,
-  Logger, Query, Put,
+  Logger,
+  Query,
+  Put,
 } from '@nestjs/common';
 import { StudentService } from './students.service';
-import { createStudentSchema, updateStudentSchema } from '../../schemas/student.schema';
+import {
+  createStudentSchema,
+  updateStudentSchema,
+} from '../../schemas/student.schema';
 import { validateQueryParams } from '../../utils/query-params-validator';
 
 @Controller('student')
@@ -18,8 +23,7 @@ export class StudentController {
   constructor(
     private readonly studentService: StudentService,
     private readonly logger: Logger,
-  ) {
-  }
+  ) {}
 
   @Post()
   async create(@Body() body, @Res() res) {
@@ -64,11 +68,7 @@ export class StudentController {
   }
 
   @Put(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() body,
-    @Res() res,
-  ) {
+  async update(@Param('id') id: string, @Body() body, @Res() res) {
     try {
       const validatedBody = updateStudentSchema.parse(body);
       const student = await this.studentService.updateStudent(

@@ -32,8 +32,8 @@ describe('AppController (e2e)', () => {
       .expect(HttpStatus.NOT_FOUND);
 
     expect(response.body).toEqual({
-      error: "Not Found",
-      message: "Cannot GET /non-existent-endpoint",
+      error: 'Not Found',
+      message: 'Cannot GET /non-existent-endpoint',
       statusCode: HttpStatus.NOT_FOUND,
     });
   });

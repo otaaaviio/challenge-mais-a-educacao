@@ -2,7 +2,9 @@ import {
   ExceptionFilter,
   Catch,
   ArgumentsHost,
-  HttpStatus, NotFoundException, HttpException,
+  HttpStatus,
+  NotFoundException,
+  HttpException,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ZodError } from 'zod';
@@ -20,13 +22,17 @@ export class ErrorHandlerMiddleware implements ExceptionFilter {
 
     if (exception instanceof ZodError) {
       const parsedValidationError = zodErrorParser(exception as ZodError);
-      return response.status(HttpStatus.BAD_REQUEST).json(parsedValidationError);
+      return response
+        .status(HttpStatus.BAD_REQUEST)
+        .json(parsedValidationError);
     }
 
-    if(exception instanceof HttpException)
-      return response.status(exception.getStatus()).json({ error: exception.message });
+    if (exception instanceof HttpException)
+      return response
+        .status(exception.getStatus())
+        .json({ error: exception.message });
 
-    if(exception instanceof NotFoundException) {
+    if (exception instanceof NotFoundException) {
       statusCode = HttpStatus.NOT_FOUND;
       message = 'Resource not found';
     }

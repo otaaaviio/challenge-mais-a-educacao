@@ -6,7 +6,7 @@
 - [Stack](#stack)
 - [Installation](#installation)
 - [Tests](#tests)
-- [Implementation Instructions](#implementation-instructions)
+- [CRUD Implementation instructions](#crud-implementation-instructions)
 
 ## Introduction
 
@@ -25,7 +25,7 @@ following the defined technical specifications and acceptance criteria.
 
 ## Installation
 
-To execute this project, you have 2 options:
+To execute this project, you have 2 options (linux):
 
 ps: docker is much easier :p
 
@@ -94,7 +94,7 @@ http://localhost:[PORT]
 4. Access in your browser the address:
 
 ```
-http://0.0.0.0:4000
+http://0.0.0.0:[PORT]
 ```
 
 For the next times, you can use this for start and stop the containers:
@@ -131,48 +131,60 @@ docker exec -it challenge-node npm run test
 
 Here, I will explain the main features implemented in this project:
 
-1. CRUD of students
+### Required features:
+1. **CRUD of students**
    - The application includes endpoints for creating, reading, updating, and deleting student records.
    - Validation of student data using Zod.
-   - Error handling with custom exceptions and middleware
    - Logging of errors and requests using the NestJS Logger.
 
-2. Database
+2. **Database**
    - The application uses the Prisma ORM to manage the database, I chose to use Prisma because it is a modern and
      efficient ORM that allows for easy management of the database schema and data and I have experience with it.
-   - The application uses PostgreSQL as the database engine.
-   - The application uses Redis to cache the student list to improve user experience.
 
-3. Models
+3. **Models**
    - The application has a student model that represents the student entity in the database.
-   - I added a `deletedAt` column to the student model to implement soft delete and persist the data in the database.
    - The student model has a unique constraint on the RA field to ensure that there are no duplicate records in the
      database.
 
-4. Validation
+4. **Validation**
    - The app uses Zod to validate the student data before saving it to the database.
    - The app validates the student data when creating and updating student records.
    - Returns a 400 Bad Request response with the validation errors when the student data is invalid.
-   - Have custom CPF rules to validate the CPF field
 
-5. Tests
-   - The application has tests for the student module using Jest.
+5. **Tests**
+   - The application has tests for the student module and hello module (used to verify status server) using Jest.
    - The tests cover the main features of the student module, such as creating, reading, updating, and deleting student
      records.
    - The tests cover the error handling of the student module.
-   - The tests use factories to create test data for the tests (implemented in the prisma/factories folder).
-   - You can run the factories with the command `npm run factory [factoryName] [quantity]` to create test data.
 
-6. Project structure
+6. **Project structure**
    - The application follows the NestJS project structure, with modules, controllers, services, and schemas.
    - Have user-friendly installation scripts to facilitate the setup of the project.
-   - Have factories to create test data for the tests.
 
-7. Organization
+7. **Organization**
    - The application follows the SOLID principles to ensure that the code is clean, maintainable, and scalable.
    - The project uses linting and formatting tools to ensure code quality and consistency.
 
-## Implementation Instructions
+### Additional features:
+- `deletedAt` column to the student model to implement soft delete and persist the data in the database.
+- Have factories to create test data for the tests.
+- The application uses Redis to cache the student list to improve user experience.
+- Have custom CPF rules to validate the CPF field
+- The tests use factories to create test data for the tests (implemented in the prisma/factories folder).
+- You can run the factories with the command `npm run factory [factoryName] [quantity]` to create test data.
+- Error handling with custom exceptions and middleware.
+
+### Architecture
+- **Modules**: The application is divided into modules, each responsible for a specific functionality. For example, the student module manages all operations related to students. 
+- **Controllers**: Controllers handle HTTP requests and delegate business logic to services.
+- **Services**: Services contain business logic and access the database and redis.
+- **Middleware**: Custom middleware for error handling.
+- **Schemas**: Schemas define the data validation rules using Zod.
+- **Factories**: Factories to create test data for the tests.
+- **Utils**: Helper functions and constants.
+- **Bin**: Scripts to facilitate the setup of the project.
+
+## CRUD Implementation Instructions
 
 To next implementations, you can follow the examples below:
 

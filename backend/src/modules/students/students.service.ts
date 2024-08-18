@@ -16,8 +16,7 @@ export class StudentService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly redis: RedisService,
-  ) {
-  }
+  ) {}
 
   async createStudent(payload) {
     const student = await this.prisma.student.create({
@@ -30,7 +29,11 @@ export class StudentService {
     return student;
   }
 
-  async findAllStudents(params: { page: number; limit: number, raFilter: string }) {
+  async findAllStudents(params: {
+    page: number;
+    limit: number;
+    raFilter: string;
+  }) {
     const whereClause: any = { deletedAt: null };
     if (params.raFilter)
       whereClause.ra = { contains: params.raFilter, mode: 'insensitive' };
@@ -47,7 +50,9 @@ export class StudentService {
       skip: (params.page - 1) * params.limit,
     });
 
-    const totalStudents = await this.prisma.student.count({ where: whereClause });
+    const totalStudents = await this.prisma.student.count({
+      where: whereClause,
+    });
 
     await this.redis.set(redisKey, JSON.stringify(students));
 
