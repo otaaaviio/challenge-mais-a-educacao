@@ -54,15 +54,17 @@ export class StudentService {
       where: whereClause,
     });
 
-    await this.redis.set(redisKey, JSON.stringify(students));
-
-    return {
+    const paginatedData = {
       data: students,
       currentPage: params.page,
       itemsPerPage: params.limit,
       totalData: totalStudents,
       totalPages: Math.ceil(totalStudents / params.limit),
     };
+
+    await this.redis.set(redisKey, JSON.stringify(paginatedData));
+
+    return paginatedData;
   }
 
   async findStudent(id: number) {
