@@ -10,7 +10,7 @@ import {
   Logger, Query, Put,
 } from '@nestjs/common';
 import { StudentService } from './students.service';
-import { createStudentSchema, updateStudentSchema } from '../schemas/student.schema';
+import { createStudentSchema, updateStudentSchema } from '../../schemas/student.schema';
 import { validateQueryParams } from '../../utils/query-params-validator';
 
 @Controller('student')
