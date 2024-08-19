@@ -1,0 +1,31 @@
+<template>
+  <v-container class="d-flex align-center justify-center fill-height">
+    <!-- Image of <a href="https://br.freepik.com/psd-gratuitas/robo-fofo-isolado_72447542.htm#fromView=search&page=1&position=1&uuid=3dbef724-8a01-4b06-8f69-bc20e6e3b2a7">Freepik</a> -->
+    <img alt="Image for page not found" class="w-25" src="@/assets/not-found.png">
+    <v-row>
+      <v-col cols="12" md="6" sm="8">
+        <v-row class="align-baseline" cols="6">
+          <v-card-title class="headline font-weight-black text-h1 pa-0">404</v-card-title>
+          <v-col>
+            <v-card-title class="pa-0">Page Not Found</v-card-title>
+          </v-col>
+        </v-row>
+        <v-card-text class="pa-0 mt-5 mb-5">
+          {{ $t('notFoundSubtitle') }}
+        </v-card-text>
+        <v-btn class="btn" @click="goBack">{{ $t('backToHome') }}</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script lang="ts">
+  export default {
+    name: 'NotFound',
+    methods: {
+      goBack () {
+        this.$router.push('/students')
+      },
+    },
+  }
+</script>

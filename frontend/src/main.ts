@@ -1,6 +1,5 @@
 import { registerPlugins } from '@/plugins'
-
-import App from './App.vue'
+import App from './app.vue'
 
 import { createApp } from 'vue'
 
