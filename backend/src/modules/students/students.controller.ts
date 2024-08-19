@@ -44,9 +44,10 @@ export class StudentController {
     @Query('page') page,
     @Query('limit') limit,
     @Query('raFilter') raFilter,
+    @Query('sortBy') sortBy,
     @Res() res,
   ) {
-    const params = validateQueryParams({ page, limit, raFilter });
+    const params = validateQueryParams({ page, limit, raFilter, sortBy });
     try {
       const paginatedData = await this.studentService.findAllStudents(params);
       return res.status(HttpStatus.OK).send(paginatedData);

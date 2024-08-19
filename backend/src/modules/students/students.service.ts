@@ -33,19 +33,30 @@ export class StudentService {
     page: number;
     limit: number;
     raFilter: string;
+    sortBy: { key: string; order: 'asc' | 'desc' };
   }) {
-    const whereClause: any = { deletedAt: null };
-    if (params.raFilter)
-      whereClause.ra = { contains: params.raFilter, mode: 'insensitive' };
-
-    const redisKey = `students:page:${params.page}:limit:${params.limit}:raFilter:${params.raFilter ?? 'null'}`;
+    const redisKey = `students:page:${params.page}:limit:${params.limit}:raFilter:${params.raFilter ?? 'null'}:sortBy:${params.sortBy ? `${params.sortBy.key}:${params.sortBy.order}` : 'null'}`;
     const cachedStudents = await this.redis.get(redisKey);
 
     if (cachedStudents) return JSON.parse(cachedStudents);
 
+    const whereClause: any = { deletedAt: null };
+    if (params.raFilter)
+      whereClause.ra = { contains: params.raFilter, mode: 'insensitive' };
+
+    let orderByClause: any = {};
+    if (params.sortBy && Array.isArray(params.sortBy)) {
+      params.sortBy.forEach((sort) => {
+        if (sort.key && ['asc', 'desc'].includes(sort.order)) {
+          orderByClause[sort.key] = sort.order;
+        }
+      });
+    }
+
     const students = await this.prisma.student.findMany({
       where: whereClause,
       select: this.studentSelect,
+      orderBy: orderByClause,
       take: params.limit,
       skip: (params.page - 1) * params.limit,
     });
