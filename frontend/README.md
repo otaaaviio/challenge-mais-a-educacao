@@ -33,7 +33,7 @@ This project is a full stack web application developed to manage student enrollm
 
 The system allows users to view, add, edit, and delete students. Students can be searched by RA, ordened by name, RA and CPF with pagination (10, 25, 50 and 100 per page).
 
-![image]()
+![image](https://github.com/user-attachments/assets/101f7774-6313-45de-ae8e-fb88c75e7bbd)
 
 ### Student Management
 
@@ -44,7 +44,7 @@ The system allows users create and edit students, with the following fields:
 - CPF (non-editable) (unique)
 - RA (non-editable) (unique)
 
-![image]()
+![image](https://github.com/user-attachments/assets/f7d8c0fe-a471-4f9e-b84d-addd9c6a3598)
 
 ### Language Support
 
@@ -68,7 +68,8 @@ The system is containerized using Docker, making it easy to develop and scale.
 
 The system has a 404 page, which is displayed when the user tries to access a non-existent page.
 
-![image]()
+![image](https://github.com/user-attachments/assets/08da6a03-6065-4b20-b16c-ecebfcc67991)
+
 
 ## Getting Started
 
