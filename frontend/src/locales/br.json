@@ -41,5 +41,6 @@
   "cpf already registered": "CPF já cadastrado. Por favor, forneça um CPF não cadastrado.",
   "ra already registered": "RA já cadastrado. Por favor, forneça um RA não cadastrado.",
   "cpf invalid": "CPF inválido. Por favor, forneça um CPF válido.",
-  "home": "Início"
+  "home": "Início",
+  "an error occurred": "Ocorreu um erro"
 }

@@ -41,5 +41,6 @@
   "cpf already registered": "CPF already registered. Please provide a non-registered CPF.",
   "ra already registered": "RA already registered. Please provide a non-registered RA.",
   "cpf invalid": "Invalid CPF. Please provide a valid CPF.",
-  "home": "Home"
+  "home": "Home",
+  "an error occurred": "An error occurred"
 }
