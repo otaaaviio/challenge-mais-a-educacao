@@ -4,10 +4,14 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { AppModule } from '../src/app.module';
 import * as casual from 'casual';
 import { generateCPF } from '../src/utils/cpf-generator';
+import { userFactory } from '../prisma/factories/user.factory';
+import * as cookieParser from 'cookie-parser';
+import { ErrorHandlerMiddleware } from '../src/middlewares/error-handler.middleware';
 import { studentFactory } from '../prisma/factories/student.factory';
 
-describe('StudentController (e2e)', () => {
+describe('Student Routes (e2e)', () => {
   let app: INestApplication;
+  let cookie: string;
 
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
@@ -15,7 +19,19 @@ describe('StudentController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.use(cookieParser());
+    app.useGlobalFilters(new ErrorHandlerMiddleware());
     await app.init();
+
+    // set cookie for auth in the tests
+    const user = await userFactory();
+    const response = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send({
+        email: user.email,
+        password: 'password', // default password
+      });
+    cookie = response.header['set-cookie'];
   });
 
   afterAll(async () => {
@@ -25,6 +41,7 @@ describe('StudentController (e2e)', () => {
   it('/student (POST)', async () => {
     const response = await request(app.getHttpServer())
       .post('/student')
+      .set('Cookie', cookie)
       .send({
         name: casual.name,
         email: casual.email,
@@ -43,6 +60,7 @@ describe('StudentController (e2e)', () => {
     const student: any = await studentFactory();
     const response = await request(app.getHttpServer())
       .get('/student')
+      .set('cookie', cookie)
       .query({ page: '1', limit: '10', raFilter: student.ra })
       .expect(HttpStatus.OK);
 
@@ -59,6 +77,7 @@ describe('StudentController (e2e)', () => {
     const student: any = await studentFactory();
     const response = await request(app.getHttpServer())
       .get(`/student/${student.id}`)
+      .set('cookie', cookie)
       .expect(HttpStatus.OK);
 
     expect(response.body).toEqual({
@@ -66,9 +85,10 @@ describe('StudentController (e2e)', () => {
     });
   });
 
-  it('cannot find a non-existent student', async () => {
+  it('/student/:id (GET) - cannot find a non-existent student', async () => {
     await request(app.getHttpServer())
       .get(`/student/99999999`)
+      .set('cookie', cookie)
       .expect(HttpStatus.NOT_FOUND);
   });
 
@@ -76,6 +96,7 @@ describe('StudentController (e2e)', () => {
     const student: any = await studentFactory();
     const response = await request(app.getHttpServer())
       .put(`/student/${student.id}`)
+      .set('cookie', cookie)
       .send({
         name: casual.name,
         email: casual.email,
@@ -92,6 +113,7 @@ describe('StudentController (e2e)', () => {
     const student: any = await studentFactory();
     const response = await request(app.getHttpServer())
       .delete(`/student/${student.id}`)
+      .set('cookie', cookie)
       .expect(HttpStatus.OK);
 
     expect(response.body).toEqual({
@@ -99,10 +121,71 @@ describe('StudentController (e2e)', () => {
     });
   });
 
-  it('cannot delete a non-existing student', async () => {
-    const student: any = await studentFactory();
+  it('/student/:id (DELETE) - cannot delete a non-existing student', async () => {
     await request(app.getHttpServer())
-      .delete(`/student/${student.id}`)
-      .expect(HttpStatus.OK);
+      .delete(`/student/99999`)
+      .set('cookie', cookie)
+      .expect(HttpStatus.NOT_FOUND);
+  });
+
+  it('/student (POST) - cannot register a student with invalid data', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/student')
+      .set('Cookie', cookie)
+      .send({
+        name: '',
+        email: '',
+        cpf: '',
+        ra: '',
+      })
+      .expect(HttpStatus.BAD_REQUEST);
+
+    expect(response.body).toEqual({
+      message: 'Validation error',
+      errors: expect.any(Array),
+    });
+  });
+
+  it('/student (POST) - cannot register a student with invalid CPF', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/student')
+      .set('Cookie', cookie)
+      .send({
+        name: casual.name,
+        email: casual.email,
+        cpf: '111.111.111-11',
+        ra: casual.string,
+      })
+      .expect(HttpStatus.BAD_REQUEST);
+
+    expect(response.body).toEqual({
+      message: 'Validation error',
+      errors: [
+        {
+          code: 'custom',
+          field: 'cpf',
+          message: 'Invalid CPF',
+        },
+      ],
+    });
+  });
+
+  it('/student (POST) - cannot register a student with duplicated RA', async () => {
+    const student: any = await studentFactory();
+    const response = await request(app.getHttpServer())
+      .post('/student')
+      .set('Cookie', cookie)
+      .send({
+        name: casual.name,
+        email: casual.email,
+        cpf: '523.944.305-08',
+        ra: student.ra,
+      })
+      .expect(HttpStatus.BAD_REQUEST);
+
+    expect(response.body).toEqual({
+      message: 'Unique constraint failed on the fields: ra',
+      code: HttpStatus.BAD_REQUEST,
+    });
   });
 });

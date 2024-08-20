@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 
-describe('AppController (e2e)', () => {
+describe('App Routes (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -26,15 +26,10 @@ describe('AppController (e2e)', () => {
       .expect('Hello World!');
   });
 
-  it('should fail this test', async () => {
-    const response = await request(app.getHttpServer())
+  it('/non-existent-endpoint (GET) should return unauthorized when tries to access a non-existent route', async () => {
+    await request(app.getHttpServer())
       .get('/non-existent-endpoint')
-      .expect(HttpStatus.NOT_FOUND);
-
-    expect(response.body).toEqual({
-      error: 'Not Found',
-      message: 'Cannot GET /non-existent-endpoint',
-      statusCode: HttpStatus.NOT_FOUND,
-    });
+      .set('Cookie', 'token=invalid-token')
+      .expect(HttpStatus.UNAUTHORIZED);
   });
 });

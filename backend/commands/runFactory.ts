@@ -1,10 +1,12 @@
 import {PrismaService} from '../src/modules/prisma/prisma.service';
-import { studentFactory } from '../prisma/factories/studentFactory';
+import { studentFactory } from '../prisma/factories/student.factory';
+import { userFactory } from '../prisma/factories/user.factory';
 
 const prisma = new PrismaService();
 
 const factories = [
     {name: 'student', run: studentFactory},
+    {name: 'user', run: userFactory},
 ];
 
 const factoryName = process.argv[2];

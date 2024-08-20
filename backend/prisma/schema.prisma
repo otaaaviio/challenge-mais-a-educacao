@@ -8,14 +8,43 @@ datasource db {
 }
 
 model Student {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   email     String
   ra        String
   cpf       String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   deletedAt DateTime?
 
   @@map("students")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  Sessions Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String  @id @default(uuid())
+  userId    Int
+  ip        String?
+  userAgent String?
+  active    Boolean @default(value: true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
 }

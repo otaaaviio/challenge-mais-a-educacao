@@ -26,12 +26,11 @@ export function validateQueryParams(params: QueryParams) {
         (sort) =>
           typeof sort !== 'object' ||
           !sort.key ||
-          !['asc', 'desc'].includes(sort.order)
+          !['asc', 'desc'].includes(sort.order),
       )
     ) {
       errors.push('Invalid sortBy value');
     }
-
 
   if (errors.length) throw new InvalidQueryParamsException(errors);
 
@@ -39,6 +38,6 @@ export function validateQueryParams(params: QueryParams) {
     page: pageNumber,
     limit: limitNumber,
     raFilter,
-    sortBy
+    sortBy,
   };
 }

@@ -7,6 +7,7 @@ async function addConstraint() {
     console.log('Adding constraints...')
     await prisma.$executeRaw`CREATE UNIQUE INDEX unique_cpf_when_not_deleted ON "students" (cpf) WHERE "deletedAt" IS NULL`;
     await prisma.$executeRaw`CREATE UNIQUE INDEX unique_ra_when_not_deleted ON "students" (ra) WHERE "deletedAt" IS NULL`;
+    await prisma.$executeRaw`CREATE UNIQUE INDEX unique_email_when_not_deleted ON "users" (email) WHERE "deletedAt" IS NULL`;
   } catch (err) {
     console.error('Error to adding constraints: ', err.message);
   }
