@@ -4,7 +4,7 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import { AppModule } from '../src/app.module';
 import * as casual from 'casual';
 import { generateCPF } from '../src/utils/cpf-generator';
-import { studentFactory } from '../prisma/factories/studentFactory';
+import { studentFactory } from '../prisma/factories/student.factory';
 
 describe('StudentController (e2e)', () => {
   let app: INestApplication;

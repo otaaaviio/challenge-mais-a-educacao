@@ -5,6 +5,7 @@ import {
   HttpStatus,
   NotFoundException,
   HttpException,
+  Logger,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ZodError } from 'zod';
@@ -13,6 +14,8 @@ import { Prisma } from '@prisma/client';
 
 @Catch()
 export class ErrorHandlerMiddleware implements ExceptionFilter {
+  private readonly logger = new Logger(ErrorHandlerMiddleware.name);
+
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -26,6 +29,9 @@ export class ErrorHandlerMiddleware implements ExceptionFilter {
         .status(HttpStatus.BAD_REQUEST)
         .json(parsedValidationError);
     }
+
+    if (exception instanceof TypeError)
+      this.logger.error(exception.message, exception.stack);
 
     if (exception instanceof HttpException)
       return response

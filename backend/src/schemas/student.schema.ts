@@ -30,3 +30,8 @@ export const updateStudentSchema = z.object({
   name: z.string().optional(),
   email: z.string().email('Invalid email address').optional(),
 });
+
+type CreateStudentRequest = z.infer<typeof createStudentSchema>;
+type UpdateStudentRequest = z.infer<typeof updateStudentSchema>;
+
+export { CreateStudentRequest, UpdateStudentRequest };

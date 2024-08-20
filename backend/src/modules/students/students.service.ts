@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { RedisService } from '../redis/redis.service';
 import { StudentNotFoundException } from '../../exceptions/student-not-found.exception';
+import { UpdateStudentRequest } from '../../schemas/student.schema';
 
 @Injectable()
 export class StudentService {
@@ -44,7 +45,7 @@ export class StudentService {
     if (params.raFilter)
       whereClause.ra = { contains: params.raFilter, mode: 'insensitive' };
 
-    let orderByClause: any = {};
+    const orderByClause: any = {};
     if (params.sortBy && Array.isArray(params.sortBy)) {
       params.sortBy.forEach((sort) => {
         if (sort.key && ['asc', 'desc'].includes(sort.order)) {
@@ -92,7 +93,7 @@ export class StudentService {
     return student;
   }
 
-  async updateStudent(id: number, payload) {
+  async updateStudent(id: number, payload: UpdateStudentRequest) {
     await this.findStudent(id);
 
     const updatedStudent = await this.prisma.student.update({

@@ -20,10 +20,8 @@ import { validateQueryParams } from '../../utils/query-params-validator';
 
 @Controller('student')
 export class StudentController {
-  constructor(
-    private readonly studentService: StudentService,
-    private readonly logger: Logger,
-  ) {}
+  private readonly logger = new Logger(StudentController.name);
+  constructor(private readonly studentService: StudentService) {}
 
   @Post()
   async create(@Body() body, @Res() res) {
