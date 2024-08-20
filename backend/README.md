@@ -22,6 +22,7 @@ following the defined technical specifications and acceptance criteria.
 - [PostgreSQL](https://www.postgresql.org/)
 - [Redis](https://redis.io/)
 - [Docker](https://www.docker.com/)
+- [JWT](https://jwt.io/)
 
 ## Installation
 
@@ -152,10 +153,9 @@ Here, I will explain the main features implemented in this project:
    - Returns a 400 Bad Request response with the validation errors when the student data is invalid.
 
 5. **Tests**
-   - The application has tests for the student module and hello module (used to verify status server) using Jest.
+   - The application has tests for the student, auth and hello module (used to verify status server) using Jest.
    - The tests cover the main features of the student module, such as creating, reading, updating, and deleting student
-     records.
-   - The tests cover the error handling of the student module.
+     records and cover the error handling.
 
 6. **Project structure**
    - The application follows the NestJS project structure, with modules, controllers, services, and schemas.
@@ -173,6 +173,11 @@ Here, I will explain the main features implemented in this project:
 - The tests use factories to create test data for the tests (implemented in the prisma/factories folder).
 - You can run the factories with the command `npm run factory [factoryName] [quantity]` to create test data.
 - Error handling with custom exceptions and middleware.
+- Unit tests for the services.
+- Authentication with JWT.
+- Custom LoggerMiddleware to log requests and time of execution.
+- Custom AuthMiddleware to protect routes.
+- Mocking in unit tests with jest.mock.
 
 ### Architecture
 - **Modules**: The application is divided into modules, each responsible for a specific functionality. For example, the student module manages all operations related to students. 

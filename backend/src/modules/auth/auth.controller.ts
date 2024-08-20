@@ -10,7 +10,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { loginSchema, registerSchema } from '../../schemas/loginSchema';
+import { loginSchema, registerSchema } from '../../schemas/login.schema';
 
 @Controller('auth')
 export class AuthController {

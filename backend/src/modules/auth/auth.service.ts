@@ -6,7 +6,7 @@ import {
   AuthException,
   AuthExceptionType,
 } from '../../exceptions/auth.exception';
-import { LoginRequest, RegisterRequest } from '../../schemas/loginSchema';
+import { LoginRequest, RegisterRequest } from '../../schemas/login.schema';
 
 @Injectable()
 export class AuthService {
