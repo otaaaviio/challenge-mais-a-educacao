@@ -5,6 +5,7 @@
 - [Overview](#overview)
 - [Stack](#stack)
 - [Key Features](#key-features)
+  - [Authentication Page](#authentication)
   - [List of students](#list-of-students)
   - [Student Management](#student-management)
   - [Language Support](#language-support)
@@ -12,7 +13,6 @@
   - [Responsive Design](#responsive-design)
   - [Docker](#docker)
   - [Not Found Page](#not-found-page)
-  - [Authentication Page](#authentication)
 - [Getting Started](#getting-started)
 - [Development](#development)
   - [Project Structure](#project-structure)
@@ -31,11 +31,17 @@ This project is a full stack web application developed to manage student enrollm
 
 ## Key Features
 
+### Authentication
+
+The system has a login page, which is displayed when the user tries to access a page that requires authentication.
+
+![image](https://github.com/user-attachments/assets/04a6d9f6-73d2-4340-989c-7aa689da8588)
+
 ### List of students
 
 The system allows users to view, add, edit, and delete students. Students can be searched by RA, ordened by name, RA and CPF with pagination (10, 25, 50 and 100 per page).
 
-![image]()
+![image](https://github.com/user-attachments/assets/8f3b734a-5bce-46fb-8203-c4e691f71ee1)
 
 ### Student Management
 
@@ -46,7 +52,7 @@ The system allows users create and edit students, with the following fields:
 - CPF (non-editable) (unique)
 - RA (non-editable) (unique)
 
-![image]()
+![image](https://github.com/user-attachments/assets/5860eaae-76a7-49e2-9ce3-6b8873f7c288)
 
 ### Language Support
 
@@ -70,13 +76,7 @@ The system is containerized using Docker, making it easy to develop and scale. U
 
 The system has a 404 page, which is displayed when the user tries to access a non-existent page.
 
-![image]()
-
-### Authentication
-
-The system has a login page, which is displayed when the user tries to access a page that requires authentication.
-
-![image]()
+![image](https://github.com/user-attachments/assets/be300ed6-328c-4b81-a5b4-a02ed98b1046)
 
 ## Getting Started
 
