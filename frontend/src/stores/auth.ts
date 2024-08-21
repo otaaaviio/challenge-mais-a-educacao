@@ -6,12 +6,10 @@ import router from '@/router'
 import { ILogin, IRegister, IUser } from '@/interfaces/auth'
 import { HttpStatusCode } from 'axios'
 
-const apiRoute = '/auth'
-
 export const useAuthStore = defineStore({
   id: 'auth',
   state: () => ({
-    user: (JSON.parse(sessionStorage.getItem('user')))?.user as IUser,
+    user: (JSON.parse(sessionStorage.getItem('user') || '{}'))?.user as IUser,
   }),
   actions: {
     clearUser () {
@@ -25,10 +23,10 @@ export const useAuthStore = defineStore({
       sessionStorage.setItem('user', JSON.stringify(user))
     },
     login (payload: ILogin) {
-      API.post(`${apiRoute}/login`, payload)
+      API.post(`/auth/login`, payload)
         .then(res => {
           this.setUser(res.data.user)
-          router.push('/', payload).then(() => {
+          router.push('/').then(() => {
             toast.success(i18n.global.t('login successfully'))
           })
         })
@@ -39,7 +37,7 @@ export const useAuthStore = defineStore({
         })
     },
     register (payload: IRegister) {
-      API.post(`${apiRoute}/register`, payload)
+      API.post(`/auth/register`, payload)
         .then(res => {
           this.setUser(res.data.user)
           router.push('/').then(() => {
@@ -47,11 +45,13 @@ export const useAuthStore = defineStore({
           })
         })
         .catch(err => {
-          if (err.response?.data.message === 'Unique constraint failed on the fields: email') { toast.error(i18n.global.t('email already registered')) } else toast.error(i18n.global.t('an error occurred'))
+          if (err.response?.data.message === 'Unique constraint failed on the fields: email') {
+            toast.error(i18n.global.t('email already registered'))
+          } else toast.error(i18n.global.t('an error occurred'))
         })
     },
     logout () {
-      API.get(`${apiRoute}/logout`)
+      API.get(`/auth/logout`)
         .then(() => {
           this.clearUser()
           router.push('/login').then(() => {
@@ -59,7 +59,7 @@ export const useAuthStore = defineStore({
           })
         })
         .catch(err => {
-          console.log(err)
+          toast.error(i18n.global.t('an error occurred'))
         })
     },
   },

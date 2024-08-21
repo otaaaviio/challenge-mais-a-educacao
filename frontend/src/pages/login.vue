@@ -6,7 +6,7 @@
         <v-container max-width="500px">
           <p class="text-center t-l-s">{{ t('welcome message') }}</p>
         </v-container>
-        <img alt="login-img" src="@/assets/login.svg" class="mt-auto"/>
+        <img alt="login-img" class="mt-auto" src="@/assets/login.svg">
       </v-col>
       <v-col class="bg-l-r bg-blue-darken-4 elevation-11" cols="12" md="5">
         <v-window v-model="step">
@@ -36,11 +36,11 @@
       return {
         step: 1,
         currentTheme: localStorage.getItem('theme'),
-        user: JSON.parse(sessionStorage.getItem('user') || '{}')
+        user: JSON.parse(sessionStorage.getItem('user') || '{}'),
       }
     },
     mounted () {
-      this.$vuetify.theme.global.name = 'dark';
+      this.$vuetify.theme.global.name = 'dark'
     },
     beforeUnmount () {
       this.$vuetify.theme.global.name = this.currentTheme

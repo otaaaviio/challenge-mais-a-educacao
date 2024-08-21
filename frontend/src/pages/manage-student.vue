@@ -1,8 +1,8 @@
 <template>
   <v-container class=" align-center fill-height">
-    <v-card class="pa-5 mx-auto" max-width="400" width="100%">
+    <v-card class="pa-5 mx-auto" :class="themeColor" max-width="400" width="100%">
       <v-card-title class="justify-center align-center d-flex">
-        {{ isEditing ? $t('editStudent') : $t('createStudent') }}
+        {{ isEditing ? t('editStudent') : t('createStudent') }}
       </v-card-title>
       <v-form ref="form" @submit.prevent="checkForm">
         <v-text-field
@@ -12,7 +12,7 @@
           class="mb-2"
           color="blue"
           :disabled="isEditing && !f.editable"
-          :label="$t(`${f.name}`)"
+          :label="t(`${f.name}`)"
           outlined
           :rules="f.rules"
           variant="outlined"
@@ -21,11 +21,11 @@
         <v-card-actions>
           <v-spacer />
           <v-btn
-            :text="$t('cancel')"
-            @click="$router.push('/students')"
+            :text="t('cancel')"
+            @click="router.push('/students')"
           />
           <v-btn
-            :text="$t('save')"
+            :text="t('save')"
             type="submit"
           />
         </v-card-actions>
@@ -42,6 +42,7 @@
     name: 'ManageStudent',
     setup () {
       const route = useRoute()
+      const router = useRouter()
       const studentStore = useStudentStore()
       const isEditing = ref(false)
       const studentId = ref(Number(route.query.id))
@@ -51,7 +52,7 @@
           value: '',
           editable: true,
           rules: [
-            v => (/^[a-zA-Z\s]*$/.test(v) && v.length >= 3) || i18n.global.t('Name must be valid'),
+            (v: string) => (/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/.test(v) && v.length >= 3) || i18n.global.t('Name must be valid'),
           ],
         },
         {
@@ -59,8 +60,8 @@
           value: '',
           editable: true,
           rules: [
-            v => !!v || i18n.global.t('Email is required'),
-            v => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || i18n.global.t('E-mail must be valid'),
+            (v: string) => !!v || i18n.global.t('Email is required'),
+            (v: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v) || i18n.global.t('E-mail must be valid'),
           ],
         },
         {
@@ -68,7 +69,7 @@
           value: '',
           editable: false,
           rules: [
-            v => !!v || i18n.global.t('RA is required'),
+            (v: string) => !!v || i18n.global.t('RA is required'),
           ],
         },
         {
@@ -76,8 +77,8 @@
           value: '',
           editable: false,
           rules: [
-            v => !!v || i18n.global.t('CPF is required'),
-            v => v.length === 14 || i18n.global.t('CPF must have 11 digits'),
+            (v: string) => !!v || i18n.global.t('CPF is required'),
+            (v: string) => v.length === 14 || i18n.global.t('CPF must have 11 digits'),
           ],
         },
       ])
@@ -96,8 +97,9 @@
       const fetchStudent = async (id: number) => {
         studentStore.view(id)
           .then(student => {
+            const typedStudent = student as Record<string, any>
             fields.value.forEach(field => {
-              field.value = student[field.name] as string
+              field.value = typedStudent[field.name] as string
             })
           })
       }
@@ -110,7 +112,9 @@
           cpf: fields.value[3].value,
         }
 
-        if (isEditing.value) { return studentStore.update(studentId.value, payload) }
+        if (isEditing.value) {
+          return studentStore.update(studentId.value, payload)
+        }
 
         return studentStore.create(payload)
       }
@@ -125,9 +129,15 @@
       return {
         handleSubmit,
         fields,
+        router,
         applyCpfMask,
         isEditing,
       }
+    },
+    computed: {
+      themeColor () {
+        return this.$vuetify.theme.global.name === 'light' ? 'bg-light' : 'bg-dark'
+      },
     },
     methods: {
       async checkForm () {

@@ -10,7 +10,6 @@ export const useStudentStore = defineStore({
   state: () => ({
     students: [] as IStudent[],
     totalData: 0,
-    apiRoute: '/student',
   }),
   actions: {
     getMessageError (err: any) {
@@ -27,7 +26,7 @@ export const useStudentStore = defineStore({
     },
     index (page: number = 3, limit: number = 10, sortBy: string = '', raFilter: string = ''): Promise<void> {
       return new Promise((resolve, reject) => {
-        API.get(this.apiRoute, {
+        API.get('/student', {
           params: {
             page,
             limit,
@@ -47,7 +46,7 @@ export const useStudentStore = defineStore({
     },
     view (id: number) {
       return new Promise((resolve, reject) => {
-        API.get(`${this.apiRoute}/${id}`)
+        API.get(`/student/${id}`)
           .then(res => {
             resolve(res.data.data)
           })
@@ -58,7 +57,7 @@ export const useStudentStore = defineStore({
       })
     },
     create (data: ICreateStudent) {
-      API.post(this.apiRoute, data)
+      API.post('/student', data)
         .then(() => {
           router.push('/students').then(() => {
             toast.success(i18n.global.t('student registered successfully'))
@@ -71,7 +70,7 @@ export const useStudentStore = defineStore({
         })
     },
     update (id: number, data: ICreateStudent) {
-      API.put(`${this.apiRoute}/${id}`, data)
+      API.put(`/student/${id}`, data)
         .then(() => {
           router.push('/students').then(() => {
             toast.success(i18n.global.t('student updated successfully'))
@@ -84,7 +83,7 @@ export const useStudentStore = defineStore({
         })
     },
     delete (id: number) {
-      API.delete(`${this.apiRoute}/${id}`)
+      API.delete(`/student/${id}`)
         .then(() => {
           this.index().then(() => {
             toast.success(i18n.global.t('student deleted successfully'))

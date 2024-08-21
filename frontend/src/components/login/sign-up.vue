@@ -8,7 +8,7 @@
           class="mb-3 t-l-s"
           dense
           :label="t('name')"
-          :rules="[() => !!user.name || t('name required')]"
+          :rules="[() => /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/.test(user.email) || t('name required')]"
           variant="outlined"
         />
         <v-text-field

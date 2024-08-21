@@ -21,7 +21,7 @@
   export default {
     props: {
       items: {
-        type: Array,
+        type: Array as () => { title: string; value: string }[],
         default: () => [],
       },
       onClick: {

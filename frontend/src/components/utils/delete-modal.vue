@@ -1,16 +1,16 @@
 <template>
   <v-dialog max-width="500" overlay-color="rgba(0, 0, 0, 0.5)" @click:outside="closeDialog">
-    <v-card :title="title">
+    <v-card :class="themeColor" :title="title">
       <v-card-text>
         {{ subtitle }}
       </v-card-text>
       <v-card-actions>
         <v-btn
-          :text="$t('cancel')"
+          :text="t('cancel')"
           @click="closeDialog"
         />
         <v-btn
-          :text="$t('confirm')"
+          :text="t('confirm')"
           @click="handleDelete"
         />
       </v-card-actions>
@@ -39,6 +39,10 @@
       },
       closeDialog: {
         type: Function,
+        required: true,
+      },
+      themeColor: {
+        type: String,
         required: true,
       },
     },

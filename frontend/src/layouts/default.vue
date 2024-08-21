@@ -37,7 +37,7 @@
         :on-click="setTheme"
       />
     </v-app-bar>
-    <v-navigation-drawer v-if="!isLayoutPage" v-model="drawer" temporary :class="themeColor">
+    <v-navigation-drawer v-if="!isLayoutPage" v-model="drawer" :class="themeColor" temporary>
       <v-list>
         <v-list-item v-for="item in drawerList" :key="item.title" link :to="item.to">
           <v-row align="center">
@@ -52,14 +52,14 @@
       </v-list>
     </v-navigation-drawer>
     <v-main :class="[!isLayoutPage ? 'watermark-background' : '', isDarkTheme ? '' : 'bg-h-l']">
-      <router-view/>
-      <app-footer v-if="!isLayoutPage" :class="themeColor"/>
+      <router-view />
+      <app-footer v-if="!isLayoutPage" :class="themeColor" />
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
-  import ButtonMenu from '@/components/button-menu.vue'
+  import ButtonMenu from '@/components/utils/button-menu.vue'
   import { i18n } from '@/plugins/i18n'
   import { useAuthStore } from '@/stores/auth'
 
@@ -73,11 +73,11 @@
       title: '',
     }),
     computed: {
-      isDarkTheme() {
-        return this.currentTheme === 'dark';
+      isDarkTheme () {
+        return this.currentTheme === 'dark'
       },
-      themeColor() {
-        return !this.isDarkTheme ? 'bg-light' : 'bg-dark';
+      themeColor () {
+        return !this.isDarkTheme ? 'bg-light' : 'bg-dark'
       },
       isLayoutPage () {
         return this.$route.name === '/notfound' || this.$route.name === '/login'
@@ -117,7 +117,7 @@
     },
     mounted () {
       watch(() => this.$route.path, () => {
-        const routeItem = this.drawerList.find(item => item.to === this.$route.path)
+        const routeItem = this.drawerList.find((item: { title: string; icon: string; to: string }) => item.to === this.$route.path)
         this.title = routeItem?.title ?? 'Grupo A'
       }, { immediate: true })
     },
@@ -140,7 +140,7 @@
         localStorage.setItem('theme', theme)
         this.currentTheme = theme
       },
-      setLocale (locale: string) {
+      setLocale (locale: 'br' | 'en') {
         i18n.global.locale = locale
         localStorage.setItem('locale', locale)
       },

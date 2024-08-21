@@ -10,8 +10,8 @@ interface ICreateStudent extends Omit<IStudent, 'id'> {
   //
 }
 
-interface IUpdateStudent extends Omit<IStudent, ['id', 'ra', 'cpf']> {
+interface IUpdateStudent extends Omit<IStudent, 'id' | 'ra' | 'cpf'> {
   //
 }
 
-export { IStudent, ICreateStudent, IUpdateStudent }
+export type { IStudent, ICreateStudent, IUpdateStudent }

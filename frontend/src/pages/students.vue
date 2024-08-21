@@ -5,6 +5,7 @@
       :close-dialog="closeDeleteDialog"
       :student-id="currentStudentId"
       :subtitle="t('subtitleModalStudentDelete')"
+      :theme-color="themeColor"
       :title="t('titleModalStudentDelete')"
     />
     <v-card class="d-flex flex-column bg-dark" max-width="1000">
@@ -29,9 +30,8 @@
       </v-card-title>
       <v-data-table-server
         v-model:items-per-page="itemsPerPage"
-        class="rounded-lg elevation-2"
-        :headers="headers"
         :class="tableColorTheme"
+        :headers="headers"
         item-value="ra"
         :items="students"
         :items-length="studentStore.totalData"
@@ -45,8 +45,14 @@
         @update:options="loadItems"
       >
         <template #item.actions="{ item }">
-          <v-btn elevation="0" icon="mdi-file-edit-outline" :class="tableColorTheme" @click="redirectToManageStudent(item.id)" />
-          <v-btn class="ml-4" elevation="0" :class="tableColorTheme" icon="mdi-delete-outline" @click="openDialog(item.id)" />
+          <v-btn :class="tableColorTheme" elevation="0" icon="mdi-file-edit-outline" @click="redirectToManageStudent(item.id)" />
+          <v-btn
+            class="ml-4"
+            :class="tableColorTheme"
+            elevation="0"
+            icon="mdi-delete-outline"
+            @click="openDialog(item.id)"
+          />
         </template>
       </v-data-table-server>
     </v-card>
@@ -86,8 +92,11 @@
       }
     },
     computed: {
-      tableColorTheme() {
-        return this.$vuetify.theme.name === 'dark' ? '' : 'bg-light';
+      tableColorTheme () {
+        return this.$vuetify.theme.name === 'dark' ? '' : 'bg-light'
+      },
+      themeColor () {
+        return this.$vuetify.theme.name === 'dark' ? 'bg-dark' : 'bg-light'
       },
       ...mapState(useStudentStore, ['students']),
       isMobile () {
