@@ -31,11 +31,11 @@ To execute this project, you have 2 options (linux):
 ps: docker is much easier :p
 
 1. Clone the repository
-```
+```bash
 git clone https://github.com/otaaaviio/challenge-mais-a-educacao.git
 ```
 2. Enter on backend folder
-```
+```bash
 cd challenge-mais-a-educacao/backend
 ```
 

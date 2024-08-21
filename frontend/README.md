@@ -92,31 +92,32 @@ You can run locally without Docker, but you need to have the following dependenc
 
 ### Installation
 
-1. Clone the repo
+1. Clone the repo and access the project folder
 
-```sh
-git clone https://github.com/otaaaviio/library.git
+```bash
+git clone https://github.com/otaaaviio/challenge-mais-a-educacao.git
+cd challenge-mais-a-educacao/frontend
 ```
 
 2. Run the following command to build the project in first time
 
-```sh
+```bash
 docker-compose up --build
 ```
 
 3. Access the application in your browser at the following URL:
 
-```sh
+```bash
 http://localhost:8080/
 ```
 
 To run the project without Docker, you need to run the following commands:
 
-```sh
+```bash
 npm install
 ```
 And then:
-```sh
+```bash
 npm run dev
 ```
 
