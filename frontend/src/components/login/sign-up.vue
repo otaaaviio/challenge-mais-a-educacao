@@ -8,7 +8,7 @@
           class="mb-3 t-l-s"
           dense
           :label="t('name')"
-          :rules="[() => /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/.test(user.email) || t('name required')]"
+          :rules="[() => /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/.test(user.name) || t('Name must be valid')]"
           variant="outlined"
         />
         <v-text-field

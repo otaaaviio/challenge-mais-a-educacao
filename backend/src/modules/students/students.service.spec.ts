@@ -62,7 +62,7 @@ describe('StudentService', () => {
       page: 1,
       limit: 10,
       raFilter: '',
-      sortBy: { key: 'name', order: 'asc' },
+      sortBy: [{ key: 'name', order: 'asc' }],
     });
     expect(response).toEqual({ currentPage: 1, data: [], itemsPerPage: 10, totalData: 0, totalPages: 0 });
   });
