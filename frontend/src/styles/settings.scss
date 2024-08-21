@@ -8,3 +8,23 @@
 // @use 'vuetify/settings' with (
 //   $color-pack: false
 // );
+
+.bg-l-l {
+  background: #2f0755;
+}
+
+.bg-l-r {
+  background: linear-gradient(90deg, #10002b, #240046);
+}
+
+.bg-b {
+  background-color: #e0aaff;
+}
+
+.t-l {
+  color: #9d4edd;
+}
+
+.t-l-s {
+  color: #e0aaff;
+}

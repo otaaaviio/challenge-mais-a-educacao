@@ -10,3 +10,11 @@ export const i18n = createI18n({
     br,
   },
 })
+
+export const globalTranslatorMixin = {
+  computed: {
+    t () {
+      return i18n.global.t
+    },
+  },
+}

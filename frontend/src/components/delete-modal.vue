@@ -1,5 +1,5 @@
 <template>
-  <v-dialog max-width="500" overlay-color="rgba(0, 0, 0, 0.5)" persistent @click:outside="closeDialog">
+  <v-dialog max-width="500" overlay-color="rgba(0, 0, 0, 0.5)" @click:outside="closeDialog">
     <v-card :title="title">
       <v-card-text>
         {{ subtitle }}

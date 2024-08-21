@@ -11,7 +11,10 @@ declare module 'vue' {
     ButtonMenu: typeof import('./components/button-menu.vue')['default']
     DeleteModal: typeof import('./components/delete-modal.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
+    InputPassword: typeof import('./components/input-password.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SignIn: typeof import('./components/sign-in.vue')['default']
+    SignUp: typeof import('./components/sign-up.vue')['default']
   }
 }
