@@ -34,9 +34,10 @@ export class StudentService {
     page: number;
     limit: number;
     raFilter: string;
-    sortBy: { key: string; order: 'asc' | 'desc' };
+    sortBy: [{ key: string; order: 'asc' | 'desc' }];
   }) {
-    const redisKey = `students:page:${params.page}:limit:${params.limit}:raFilter:${params.raFilter ?? 'null'}:sortBy:${params.sortBy ? `${params.sortBy.key}:${params.sortBy.order}` : 'null'}`;
+    const sortByString = params.sortBy ? params.sortBy.map(s => `${s.key}:${s.order}`).join(',') : 'null';
+    const redisKey = `students:page:${params.page}:limit:${params.limit}:raFilter:${params.raFilter ?? 'null'}:sortBy:${sortByString}`;
     const cachedStudents = await this.redis.get(redisKey);
 
     if (cachedStudents) return JSON.parse(cachedStudents);

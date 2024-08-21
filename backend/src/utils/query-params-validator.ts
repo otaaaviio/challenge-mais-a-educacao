@@ -4,7 +4,7 @@ export interface QueryParams {
   page?: string;
   limit?: string;
   raFilter?: string;
-  sortBy?: { key: string; order: 'asc' | 'desc' };
+  sortBy?: [{ key: string; order: 'asc' | 'desc' }];
 }
 
 export function validateQueryParams(params: QueryParams) {
