@@ -12,6 +12,7 @@
   - [Responsive Design](#responsive-design)
   - [Docker](#docker)
   - [Not Found Page](#not-found-page)
+  - [Authentication Page](#authentication)
 - [Getting Started](#getting-started)
 - [Development](#development)
   - [Project Structure](#project-structure)
@@ -26,6 +27,7 @@ This project is a full stack web application developed to manage student enrollm
 - [Vue.js](https://vuejs.org/) - The Progressive JavaScript Framework
 - [Vuetify](https://vuetifyjs.com/en/) - Material Design Component Framework
 - [Vue i18n](https://kazupon.github.io/vue-i18n/) - Internationalization plugin for Vue.js
+- [NGINX](https://nginx.org/en/) - Web server
 
 ## Key Features
 
@@ -33,7 +35,7 @@ This project is a full stack web application developed to manage student enrollm
 
 The system allows users to view, add, edit, and delete students. Students can be searched by RA, ordened by name, RA and CPF with pagination (10, 25, 50 and 100 per page).
 
-![image](https://github.com/user-attachments/assets/101f7774-6313-45de-ae8e-fb88c75e7bbd)
+![image]()
 
 ### Student Management
 
@@ -44,7 +46,7 @@ The system allows users create and edit students, with the following fields:
 - CPF (non-editable) (unique)
 - RA (non-editable) (unique)
 
-![image](https://github.com/user-attachments/assets/f7d8c0fe-a471-4f9e-b84d-addd9c6a3598)
+![image]()
 
 ### Language Support
 
@@ -62,14 +64,19 @@ The system is fully responsive, adapting to different screen sizes and devices.
 
 ### Docker
 
-The system is containerized using Docker, making it easy to develop and scale.
+The system is containerized using Docker, making it easy to develop and scale. Using nginx as a web server, the system is served on port 8080.
 
 ### Not Found Page
 
 The system has a 404 page, which is displayed when the user tries to access a non-existent page.
 
-![image](https://github.com/user-attachments/assets/08da6a03-6065-4b20-b16c-ecebfcc67991)
+![image]()
 
+### Authentication
+
+The system has a login page, which is displayed when the user tries to access a page that requires authentication.
+
+![image]()
 
 ## Getting Started
 
@@ -94,13 +101,13 @@ git clone https://github.com/otaaaviio/library.git
 2. Run the following command to build the project in first time
 
 ```sh
-docker compose build --no-cache
+docker-compose up --build
 ```
 
-3. Run the following command to start the project
+3. Access the application in your browser at the following URL:
 
 ```sh
-docker compose up
+http://localhost:8080/
 ```
 
 To run the project without Docker, you need to run the following commands:
@@ -138,7 +145,7 @@ This structure suggests a web application project that uses a modular architectu
 
 ## Conclusion
 
-This front-end project was developed to meet the needs of managing student enrollments in Web Programming classes at the Edtech institution. Using Vue.js and Vuetify, the application offers an intuitive and responsive interface, allowing the creation, editing, consultation, and deletion of students. The implementation follows the defined technical specifications and acceptance criteria, ensuring a robust and efficient solution. The detailed documentation and modular code structure facilitate the maintenance and scalability of the project.
+This front-end project was developed to meet the needs of managing student enrollments in classes at the Edtech institution. Using Vue.js and Vuetify, the application offers an intuitive and responsive interface, allowing the creation, editing, consultation, and deletion of students. The implementation follows the defined technical specifications and acceptance criteria, ensuring a robust and efficient solution. The detailed documentation and modular code structure facilitate the maintenance and scalability of the project.
 
 ## Contact
 
