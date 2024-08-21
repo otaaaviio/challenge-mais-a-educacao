@@ -1,20 +1,20 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar v-if="!isLayoutPage">
+    <v-app-bar v-if="!isLayoutPage" :class="themeColor">
       <v-dialog
         v-model="confirmLogout"
         max-width="500"
         overlay-color="rgba(0, 0, 0, 0.5)"
         @click:outside="confirmLogout = false"
       >
-        <v-card :title="$t('confirm logout')">
+        <v-card :title="t('confirm logout')">
           <v-card-actions>
             <v-btn
-              :text="$t('cancel')"
+              :text="t('cancel')"
               @click="confirmLogout = false"
             />
             <v-btn
-              :text="$t('confirm')"
+              :text="t('confirm')"
               @click="handleLogout"
             />
           </v-card-actions>
@@ -29,7 +29,7 @@
         :items="locales"
         :on-click="setLocale"
         :show-subheader="true"
-        :subheader="$t('language')"
+        :subheader="t('language')"
       />
       <button-menu
         :icon="getIconTheme"
@@ -37,7 +37,7 @@
         :on-click="setTheme"
       />
     </v-app-bar>
-    <v-navigation-drawer v-if="!isLayoutPage" v-model="drawer" temporary>
+    <v-navigation-drawer v-if="!isLayoutPage" v-model="drawer" temporary :class="themeColor">
       <v-list>
         <v-list-item v-for="item in drawerList" :key="item.title" link :to="item.to">
           <v-row align="center">
@@ -51,9 +51,9 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-main :class="currentTheme === 'light' ? 'bg-grey-lighten-2' : ''">
-      <router-view />
-      <app-footer v-if="!isLayoutPage" />
+    <v-main :class="[!isLayoutPage ? 'watermark-background' : '', isDarkTheme ? '' : 'bg-h-l']">
+      <router-view/>
+      <app-footer v-if="!isLayoutPage" :class="themeColor"/>
     </v-main>
   </v-app>
 </template>
@@ -73,6 +73,12 @@
       title: '',
     }),
     computed: {
+      isDarkTheme() {
+        return this.currentTheme === 'dark';
+      },
+      themeColor() {
+        return !this.isDarkTheme ? 'bg-light' : 'bg-dark';
+      },
       isLayoutPage () {
         return this.$route.name === '/notfound' || this.$route.name === '/login'
       },
@@ -88,21 +94,21 @@
       },
       locales () {
         return [
-          { title: this.$t('br'), value: 'br' },
-          { title: this.$t('en'), value: 'en' },
+          { title: this.t('br'), value: 'br' },
+          { title: this.t('en'), value: 'en' },
         ]
       },
       themes () {
         return [
-          { title: this.$t('darkTheme'), value: 'dark' },
-          { title: this.$t('lightTheme'), value: 'light' },
-          { title: this.$t('systemTheme'), value: 'system' },
+          { title: this.t('darkTheme'), value: 'dark' },
+          { title: this.t('lightTheme'), value: 'light' },
+          { title: this.t('systemTheme'), value: 'system' },
         ]
       },
       drawerList () {
         return [
-          { title: this.$t('home'), icon: 'mdi-home-circle-outline', to: '/' },
-          { title: this.$t('students'), icon: 'mdi-account-school-outline', to: '/students' },
+          { title: this.t('home'), icon: 'mdi-home-circle-outline', to: '/' },
+          { title: this.t('students'), icon: 'mdi-account-school-outline', to: '/students' },
         ]
       },
     },
@@ -141,3 +147,11 @@
     },
   }
 </script>
+
+<style>
+.watermark-background {
+  background-image: url('@/assets/background.svg');
+  background-repeat: repeat;
+  background-size: 70%;
+}
+</style>

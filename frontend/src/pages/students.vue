@@ -4,10 +4,10 @@
       v-model="dialogDeleteOpen"
       :close-dialog="closeDeleteDialog"
       :student-id="currentStudentId"
-      :subtitle="$t('subtitleModalStudentDelete')"
-      :title="$t('titleModalStudentDelete')"
+      :subtitle="t('subtitleModalStudentDelete')"
+      :title="t('titleModalStudentDelete')"
     />
-    <v-card class="d-flex flex-column" max-width="1000">
+    <v-card class="d-flex flex-column bg-dark" max-width="1000">
       <v-card-title class="d-flex align-center">
         <v-text-field
           v-model="search"
@@ -15,37 +15,38 @@
           density="compact"
           flat
           hide-details
-          :label="$t('searchRA')"
+          :label="t('searchRA')"
           prepend-inner-icon="mdi-magnify"
           single-line
           variant="solo-filled"
         />
         <v-btn
           class="ml-2"
-          color="primary"
+          :class="tableColorTheme"
           @click="redirectToManageStudent()"
-        >{{ $t('registerNewStudent') }}
+        >{{ t('registerNewStudent') }}
         </v-btn>
       </v-card-title>
       <v-data-table-server
         v-model:items-per-page="itemsPerPage"
         class="rounded-lg elevation-2"
         :headers="headers"
+        :class="tableColorTheme"
         item-value="ra"
         :items="students"
         :items-length="studentStore.totalData"
         :items-per-page-options="[10, 25, 50, 100]"
-        :items-per-page-text="$t('itemsPerPage')"
+        :items-per-page-text="t('itemsPerPage')"
         :loading="loading"
-        :loading-text="$t('loading')"
+        :loading-text="t('loading')"
         :mobile="isMobile"
-        :no-data-text="$t('noData')"
+        :no-data-text="t('noData')"
         :search="search"
         @update:options="loadItems"
       >
         <template #item.actions="{ item }">
-          <v-btn elevation="0" icon="mdi-file-edit-outline" @click="redirectToManageStudent(item.id)" />
-          <v-btn class="ml-4" elevation="0" icon="mdi-delete-outline" @click="openDialog(item.id)" />
+          <v-btn elevation="0" icon="mdi-file-edit-outline" :class="tableColorTheme" @click="redirectToManageStudent(item.id)" />
+          <v-btn class="ml-4" elevation="0" :class="tableColorTheme" icon="mdi-delete-outline" @click="openDialog(item.id)" />
         </template>
       </v-data-table-server>
     </v-card>
@@ -85,14 +86,17 @@
       }
     },
     computed: {
+      tableColorTheme() {
+        return this.$vuetify.theme.name === 'dark' ? '' : 'bg-light';
+      },
       ...mapState(useStudentStore, ['students']),
       isMobile () {
         return this.$vuetify.display.mobile
       },
     },
     mounted () {
-      this.headers[0].title = this.$t('ra')
-      this.headers[1].title = this.$t('name')
+      this.headers[0].title = this.t('ra')
+      this.headers[1].title = this.t('name')
     },
     methods: {
       loadItems: debounce(function ({ page, itemsPerPage, sortBy }) {
